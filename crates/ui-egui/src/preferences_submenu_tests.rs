@@ -9,7 +9,7 @@ fn rows() -> Vec<(&'static str, &'static str)> {
 }
 
 #[test]
-fn preferences_submenu_reads_in_the_reference_order_with_two_separators() {
+fn preferences_submenu_preserves_reference_order_and_includes_chat() {
     let labels: Vec<&str> = rows().into_iter().map(|r| r.0).collect();
     // Row 1 ("Settings…") is #8239's: whatever it says, it is first and followed by a separator.
     assert_eq!(
@@ -17,6 +17,7 @@ fn preferences_submenu_reads_in_the_reference_order_with_two_separators() {
         [
             "---",
             "AI Integrations…",
+            "AI Chat…",
             "Interface…",
             "Workspace…",
             "Tools…",
@@ -39,7 +40,7 @@ fn preferences_submenu_reads_in_the_reference_order_with_two_separators() {
 }
 
 #[test]
-fn preferences_submenu_ids_are_unchanged() {
+fn preferences_submenu_preserves_existing_ids_and_adds_chat() {
     let ids: Vec<&str> = rows().into_iter().map(|r| r.1).collect();
     assert_eq!(
         ids,
@@ -47,6 +48,7 @@ fn preferences_submenu_ids_are_unchanged() {
             "edit.preferences.general",
             "---",
             "edit.preferences.integrations",
+            "edit.preferences.ai",
             "edit.preferences.interface",
             "edit.preferences.workspace",
             "edit.preferences.tools",

@@ -41,6 +41,8 @@ impl PhotocraftApp {
         // copy steps instead of the action, so they do not keep the gate yet.
         session.automation_gate = session.automation_gate.or(services.automation_authorize);
         let mut app = Self {
+            #[cfg(not(target_arch = "wasm32"))]
+            assistant: Default::default(),
             session,
             ui: UiState::default(),
             services,

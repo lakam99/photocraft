@@ -626,6 +626,8 @@ pub struct Services {
     /// Preferences persistence: the platform config directory on native, browser storage on
     /// the web (see `prefs_ui`).
     pub load_prefs: Option<LoadTextFn>,
+    /// Native profile identity for the AI credential store and local chat history.
+    pub ai_preferences_file: Option<std::path::PathBuf>,
     pub save_prefs: Option<SaveTextFn>,
     /// The asynchronous Actions library write must finish before saving its shortcut changes.
     pub actions_write_pending: Option<Box<dyn Fn() -> bool>>,

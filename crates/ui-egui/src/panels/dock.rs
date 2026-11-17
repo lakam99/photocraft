@@ -255,13 +255,14 @@ fn rail_body(app: &mut PhotocraftApp, ui: &mut egui::Ui, t: &Tokens) {
     ui.painter().line_segment([pos2(x, r.top()), pos2(x, r.bottom())], Stroke::new(1.0, t.separator));
     ui.spacing_mut().item_spacing.y = 4.0;
     use crate::dock::Group;
-    let entries: [(&str, &str, Group); 6] = [
+    let entries: [(&str, &str, Group); 7] = [
         ("sliders-horizontal", tl!("Properties"), Group::Properties),
         ("navigation", tl!("Navigator"), Group::Navigator),
         ("palette", tl!("Color & Swatches"), Group::Color),
         ("layers", tl!("Layers"), Group::Layers),
         ("clock", tl!("History"), Group::History),
         ("brush", tl!("Brushes"), Group::Brushes),
+        ("message-square", tl!("AI Chat"), Group::AiChat),
     ];
     for (icon, name, g) in entries {
         // Studio floats Properties outside the dock.
@@ -328,5 +329,11 @@ pub(crate) fn dock_body(app: &mut PhotocraftApp, ui: &mut egui::Ui, group: crate
         (Group::Layers, 1) => channels(app, ui),
         (Group::Layers, _) => crate::vector_ui::paths_panel(app, ui),
         (Group::Brushes, _) => crate::brushes_tab::show(app, ui),
+        (Group::AiChat, _) => {
+            #[cfg(not(target_arch = "wasm32"))]
+            crate::assistant::show(app, ui);
+            #[cfg(target_arch = "wasm32")]
+            ui.label("AI Chat is available in the desktop fork.");
+        }
     }
 }

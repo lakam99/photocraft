@@ -10,7 +10,7 @@ use serde_json::{Value, json};
 use crate::commands::{CommandSpec, always};
 use crate::{EngineError, Result, Session};
 
-pub const RELEASES: &str = "https://github.com/storytold/photocraft/releases";
+pub const RELEASES: &str = "https://github.com/lakam99/photocraft/releases";
 pub type CheckResult = std::result::Result<Option<Release>, String>;
 /// Starts background work and returns immediately. No document or personal data is sent.
 pub type CheckFn = Box<dyn FnMut() -> std::result::Result<Receiver<CheckResult>, String> + Send>;
@@ -155,7 +155,7 @@ mod tests {
     fn semantic_versions_and_trusted_links() {
         let release = parse_release(&response("v0.10.0"), "0.9.0").unwrap().unwrap();
         assert_eq!(release.version, "0.10.0");
-        assert_eq!(release.url, format!("{RELEASES}/tag/v0.10.0"));
+        assert_eq!(release.url, "https://github.com/lakam99/photocraft/releases/tag/v0.10.0");
         for tag in ["v0.9.0", "v0.8.9", "v0.9.0+build.2", "v1.0.0-rc.1"] {
             assert_eq!(parse_release(&response(tag), "0.9.0").unwrap(), None, "{tag}");
         }

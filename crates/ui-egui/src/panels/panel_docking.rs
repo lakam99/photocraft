@@ -41,6 +41,7 @@ const PANELS: &[(&str, &str, Group)] = &[
     ("channels", "Channels", Group::Layers),
     ("paths", "Paths", Group::Layers),
     ("brushes", "Brushes", Group::Brushes),
+    ("aiChat", "AI Chat", Group::AiChat),
 ];
 
 /// PhotoCraft's wording of craft-ui's docking labels, translated through `tl!`. The others keep
@@ -448,6 +449,12 @@ fn ensure(app: &PhotocraftApp, workspace: &mut Workspace, panel: &str) -> Result
 fn default_place(app: &PhotocraftApp, layout: &Layout<String>, panel: &str) -> Action<String> {
     let open = Action::Open { panel: panel.to_owned(), anchor: None };
     let Some(group) = PANELS.iter().find(|p| p.0 == panel).map(|p| p.2) else { return open };
+    if group == Group::AiChat
+        && let Some(anchor) = first_root(layout, panel)
+    {
+        // Chat needs a transcript and a composer together, even in a short editor window.
+        return Action::OpenAt { panel: panel.to_owned(), anchor, placement: Placement::Column { after: false } };
+    }
     let pro = app.ui.theme.is_pro();
     let tabs: Vec<&str> = app.ui.dock.ordered_tabs(group, pro).iter().filter_map(|(_, label)| normalize(label)).collect();
     if let Some(mate) = tabs.iter().find(|id| layout.contains(&id.to_string())) {
@@ -1258,6 +1265,9 @@ fn migration_hidden(app: &PhotocraftApp, visible: &Layout<String>) -> Vec<(Strin
     let full = legacy_layout(app, true);
     PANELS
         .iter()
+        // A never-opened chat needs its own column. Restoring an orphan legacy location would
+        // put it in the first existing tab group, leaving only enough room for its composer.
+        .filter(|(id, _, _)| *id != "aiChat")
         .filter(|(id, _, _)| !visible.contains(&id.to_string()))
         .filter_map(|(id, _, _)| full.location(&id.to_string()).ok().map(|at| ((*id).to_owned(), at)))
         .collect()
@@ -1488,6 +1498,7 @@ pub(crate) fn prepare_legacy_update(
                 Group::History => tabs.history,
                 Group::Layers => tabs.layers,
                 Group::Brushes => tabs.brushes,
+                Group::AiChat => tabs.ai_chat,
             };
             let id = group.tabs(pro).get(index).and_then(|label| normalize(label)).ok_or("dockTabs index is outside the panel group")?;
             if visibility == Some(false) {
