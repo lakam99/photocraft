@@ -13,6 +13,8 @@
 /// prompt shows both, and an AppImage's menu entry gets the icon.
 #[cfg(not(target_arch = "wasm32"))]
 pub const UPDATE_APP: craft_update::app::App = craft_update::app::App {
+    repo: "lakam99/photocraft",
+    developer: "lakam99",
     icon_png: Some(include_bytes!("../../../assets/app-icon/hicolor/128x128/apps/ai.storyteller.photocraft.png")),
     accent: Some([0x2f, 0x7b, 0xf5]),
     ..craft_update::suite::PHOTOCRAFT
@@ -76,6 +78,8 @@ pub use file_open::OsEvent;
 pub use state::{Tool, UiState};
 
 mod app;
+#[cfg(not(target_arch = "wasm32"))]
+mod assistant;
 mod input;
 mod prefs;
 mod services;
@@ -352,6 +356,8 @@ pub use widgets::tone;
 type InfoSampleKey = (i32, i32, u64, u32, u32);
 
 pub struct PhotocraftApp {
+    #[cfg(not(target_arch = "wasm32"))]
+    assistant: assistant::Runtime,
     pub session: Session,
     pub ui: UiState,
     pub services: Services,

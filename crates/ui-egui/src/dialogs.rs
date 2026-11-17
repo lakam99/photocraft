@@ -1488,6 +1488,19 @@ mod preference_resize_tests {
         PhotocraftApp::setup_context(&h.ctx, Default::default());
         h.run_steps(5);
         assert_buttons_in_corner(&h, "on open");
+        // A vertical scroll area inherits its parent's horizontal layout unless the section
+        // list explicitly restores a column. Keep the labels stacked beside the settings.
+        fn label_position(shape: &egui::Shape, label: &str) -> Option<egui::Pos2> {
+            match shape {
+                egui::Shape::Vec(shapes) => shapes.iter().find_map(|s| label_position(s, label)),
+                egui::Shape::Text(text) if text.galley.job.text == label => Some(text.pos),
+                _ => None,
+            }
+        }
+        let position = |label| h.output().shapes.iter().find_map(|s| label_position(&s.shape, label)).unwrap();
+        let general = position("General");
+        let workspace = position("Workspace");
+        assert!((workspace.x - general.x).abs() < 1.0 && workspace.y > general.y + 40.0, "sections must stack: {general:?}, {workspace:?}");
         let opened = frame(&h);
         drag_corner(&mut h, egui::vec2(220.0, 80.0));
         assert!(frame(&h).width() > opened.width() + 150.0 && frame(&h).height() > opened.height() + 50.0, "wider: {:?}", frame(&h));

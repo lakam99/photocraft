@@ -52,6 +52,8 @@ flate2 = { workspace = true }
 web-time = { workspace = true }
 
 [target.'cfg(not(target_arch = "wasm32"))'.dependencies]
+# MIT OR Apache-2.0; shared panel, OpenAI transport, bounded tools and OS credential storage.
+craft-ai-chat-egui = { git = "https://github.com/lakam99/craft-ai-chat", rev = "41edaa0f7de0e153b5747d217a913011491a5bf2", version = "0.5.5" }
 # Floating panels open in their own OS windows on the desktop; the web keeps them in the page.
 craft-ui = { workspace = true, features = ["native-windows"] }
 craft-update = { workspace = true }

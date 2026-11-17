@@ -908,6 +908,13 @@ fn main_workspace_file_loads_as_the_default_and_saves_as_a_workspace() {
     assert!(in_dock_column(layout, "layers") && panel_active(layout, "actions"));
     for (panel, _, _) in PANELS {
         let panel = panel.to_string();
+        if panel == "aiChat" {
+            // Old workspaces have no chat placement. Its first open creates a full-height
+            // column rather than restoring an orphan legacy tab into the Color group.
+            assert!(!layout.contains(&panel) && workspace.hidden.iter().all(|(id, _)| *id != panel));
+            assert!(matches!(default_place(&app, layout, &panel), Action::OpenAt { placement: Placement::Column { .. }, .. }));
+            continue;
+        }
         assert!(layout.contains(&panel) || workspace.hidden.iter().any(|(id, _)| *id == panel), "{panel} is shown or can be reopened");
     }
 

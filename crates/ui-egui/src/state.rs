@@ -79,6 +79,8 @@ pub struct Panels {
     /// Window › Brushes: dockable panel, like Photoshop's.
     #[serde(default)]
     pub brushes: bool,
+    #[serde(default)]
+    pub ai_chat: bool,
     /// Window › Character / Paragraph: the Character | Paragraph dock group (#150).
     #[serde(default)]
     pub character: bool,
@@ -146,6 +148,7 @@ impl Default for Panels {
             status_bar: true,
             brush_settings: false,
             brushes: false,
+            ai_chat: false,
             character: false,
             toolbar_double: false,
             toolbar_side: ToolbarSide::Start,

@@ -3,9 +3,8 @@ Copyright (c) 2026 ArtCraft Team and the PhotoCraft contributors.
 Licensed under the MIT License or the Apache License, Version 2.0, at your option
 (LICENSE-MIT, LICENSE-APACHE).
 
-The ArtCraft name, wordmark and logos in docs/brand/ are trademarks of the ArtCraft Team. They are
-not open source and are not covered by the license above; their terms are in
-docs/brand/LICENSE-brand.txt.
+The ArtCraft name, wordmark and logos are trademarks of the ArtCraft Team. The trademark artwork
+is omitted from this community fork; the original terms are retained in docs/brand/LICENSE-brand.txt.
 
 Third-party material
 
@@ -19,10 +18,9 @@ SCOWL English word list (assets/dict/en_US-scowl-50.txt.gz) — SCOWL license. S
 libfacedetection face detection weights and network (crates/algo/data/libfacedetection.bin, crates/algo/src/faces/cnn.rs) — BSD-3-Clause, Copyright (c) 2015-2019, Shiqi Yu, all rights reserved. See crates/algo/data/LICENSE-libfacedetection.txt.
 Interface translations (embedded at build time from storytold/craft-i18n locales/<code>/common.tsv and photocraft.tsv, at the commit in craft-i18n.rev) — MIT OR Apache-2.0, Copyright (c) 2026 ArtCraft Team and the craft-i18n contributors; the license texts are the same as LICENSE-MIT and LICENSE-APACHE. Per-language credits and provenance: https://github.com/storytold/craft-i18n/blob/main/ATTRIBUTION.md
 
-Builds made with craft-fonts (CRAFT_FONTS_DIR; all official releases) also embed the fonts listed in
-https://github.com/storytold/craft-fonts/blob/main/ATTRIBUTION.md (today BIZ UDPGothic, Shippori Mincho and
-BIZ UDMincho; not the web build), under the SIL Open Font License 1.1. Their licence texts
-ship with the package as OFL-<family>.txt.
+Native fork releases use the craft-fonts revision in craft-fonts.rev and embed its default font
+manifest, under the SIL Open Font License 1.1. The source attribution and per-family licence texts
+ship under licenses/craft-fonts. The web build does not embed these fonts.
 
 Linux and FreeBSD Wayland window decorations
 -------------------------------------------

@@ -37,11 +37,13 @@ pub enum Group {
     Layers,
     /// Brushes presets.
     Brushes,
+    AiChat,
 }
 
 impl Group {
     /// Photoshop Essentials order, top to bottom.
-    pub const ALL: [Group; 7] = [Group::Color, Group::Properties, Group::Character, Group::Navigator, Group::History, Group::Layers, Group::Brushes];
+    pub const ALL: [Group; 8] =
+        [Group::Color, Group::Properties, Group::Character, Group::Navigator, Group::History, Group::Layers, Group::Brushes, Group::AiChat];
 
     pub fn key(self) -> &'static str {
         match self {
@@ -52,6 +54,7 @@ impl Group {
             Group::History => "history",
             Group::Layers => "layers",
             Group::Brushes => "brushes",
+            Group::AiChat => "aiChat",
         }
     }
 
@@ -66,6 +69,7 @@ impl Group {
             Group::History => 200.0,
             Group::Layers => 320.0,
             Group::Brushes => 200.0,
+            Group::AiChat => 420.0,
         }
     }
 
@@ -80,6 +84,7 @@ impl Group {
             Group::History => 130.0,
             Group::Layers => 200.0,
             Group::Brushes => 150.0,
+            Group::AiChat => 240.0,
         }
     }
 
@@ -89,6 +94,7 @@ impl Group {
         match self {
             Group::Layers => 500.0,
             Group::Brushes => 100.0,
+            Group::AiChat => 420.0,
             g => g.min_height(),
         }
     }
@@ -98,6 +104,7 @@ impl Group {
         match self {
             Group::Layers => 140.0,
             Group::Brushes => 100.0,
+            Group::AiChat => 240.0,
             _ => 80.0,
         }
     }
@@ -113,6 +120,7 @@ impl Group {
             Group::History => &["History", "Actions", "Layer Comps"],
             Group::Layers => &["Layers", "Channels", "Paths"],
             Group::Brushes => &["Brushes"],
+            Group::AiChat => &["AI Chat"],
         }
     }
 
@@ -122,7 +130,7 @@ impl Group {
     /// areas shared the wheel, and where the outer content overflowed by one physical pixel (at
     /// 125 % scaling for some window heights) the footer and list moved a pixel as you scrolled (#6238).
     pub fn scrolls_itself(self, tab: usize) -> bool {
-        matches!((self, tab), (Group::Layers, 0..=2) | (Group::History, 0) | (Group::History, 1) | (Group::Navigator, 0))
+        matches!((self, tab), (Group::Layers, 0..=2) | (Group::History, 0) | (Group::History, 1) | (Group::Navigator, 0) | (Group::AiChat, _))
     }
 
     pub(crate) fn tab_mut(self, tabs: &mut DockTabs) -> &mut usize {
@@ -134,6 +142,7 @@ impl Group {
             Group::History => &mut tabs.history,
             Group::Layers => &mut tabs.layers,
             Group::Brushes => &mut tabs.brushes,
+            Group::AiChat => &mut tabs.ai_chat,
         }
     }
 
@@ -151,6 +160,7 @@ impl Group {
             Group::History => panels.history,
             Group::Layers => panels.layers,
             Group::Brushes => panels.brushes,
+            Group::AiChat => panels.ai_chat,
         }
     }
 
@@ -163,6 +173,7 @@ impl Group {
             Group::History => &mut panels.history,
             Group::Layers => &mut panels.layers,
             Group::Brushes => &mut panels.brushes,
+            Group::AiChat => &mut panels.ai_chat,
         }
     }
 }

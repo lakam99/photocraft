@@ -28,7 +28,7 @@ impl PhotocraftApp {
     pub(crate) fn home_screen_up(&mut self) -> bool {
         let opening = !self.jobs.opens.is_empty();
         let n = self.session.documents().len();
-        !opening && self.ui.chrome.shows_home(n, self.session.prefs().general.auto_show_home_screen)
+        !self.ui.panels.ai_chat && !opening && self.ui.chrome.shows_home(n, self.session.prefs().general.auto_show_home_screen)
     }
 
     /// Shared logic body. A wrapping host owns the final reset tail after its own work.
@@ -64,6 +64,8 @@ impl PhotocraftApp {
         // sees their released budget.
         self.drain_captures(ctx);
         self.drain_control(ctx);
+        #[cfg(not(target_arch = "wasm32"))]
+        crate::assistant::poll(self, ctx);
         native_menu::run(self, ctx);
         view_cmds::leave_full_screen_without_document(self, ctx);
         // A box drag that ended without a release reaching the Type tool keeps its box, before

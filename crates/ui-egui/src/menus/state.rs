@@ -3,6 +3,9 @@ use super::items::MenuItem;
 use super::{DOCUMENT_ITEM, PhotocraftApp, Value};
 
 pub fn is_enabled(app: &PhotocraftApp, id: &str) -> bool {
+    if id.starts_with("ai.") || matches!(id, "window.panel.aiChat" | "edit.preferences.ai") {
+        return !cfg!(target_arch = "wasm32");
+    }
     if id == "layer.selectUnderCursor" {
         return app.session.active().is_some() && app.drag.is_none() && app.brush_resize.is_none();
     }

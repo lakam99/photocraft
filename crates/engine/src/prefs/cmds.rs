@@ -217,6 +217,7 @@ pub fn specs() -> Vec<CommandSpec> {
         section!("edit.preferences.enhancedControls", "Enhanced Controls…"),
         section!("edit.preferences.rawDefaults", "RAW Defaults…"),
         section!("edit.preferences.integrations", "Integrations…"),
+        section!("edit.preferences.ai", "AI Chat…"),
         spec!(
             "edit.keyboardShortcuts",
             "Keyboard Shortcuts…",

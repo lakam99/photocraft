@@ -15,6 +15,7 @@ pub struct DockTabs {
     pub character: usize,
     /// Brushes presets.
     pub brushes: usize,
+    pub ai_chat: usize,
 }
 
 /// Color panel state.

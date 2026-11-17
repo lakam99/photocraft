@@ -69,6 +69,10 @@ pub fn invoke(app: &mut PhotocraftApp, ctx: &egui::Context, id: &str, params: Va
     {
         authorize(id, &params)?;
     }
+    #[cfg(not(target_arch = "wasm32"))]
+    if let Some(result) = crate::assistant::route(app, ctx, id, &params) {
+        return result;
+    }
     // A held Type box handle applies its box before any command that may read or edit the
     // document runs; a command that edits it first would make the drag's box stale and lose it.
     if !keeps_box_drag(id) {

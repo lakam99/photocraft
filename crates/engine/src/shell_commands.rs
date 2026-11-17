@@ -7,6 +7,17 @@
 
 /// Shell commands: id, label, menu path, default shortcut.
 pub const SHELL_COMMANDS: &[(&str, &str, &[&str], Option<&str>)] = &[
+    ("window.panel.aiChat", "AI Chat", &["Window"], None),
+    ("ai.prompt", "Set AI Chat Prompt", &[], None),
+    ("ai.send", "Send AI Chat Message", &[], None),
+    ("ai.stop", "Stop AI Chat", &[], None),
+    ("ai.clear", "New AI Chat", &[], None),
+    ("ai.status", "AI Chat Status", &[], None),
+    ("ai.settings", "AI Chat Settings", &[], None),
+    ("ai.connection", "AI Chat Connection", &[], None),
+    ("ai.saveKey", "Save AI Key Securely", &[], None),
+    ("ai.loadKey", "Load AI Key", &[], None),
+    ("ai.forgetKey", "Forget AI Key", &[], None),
     ("layer.selectUnderCursor", "Select Layer Under Cursor", &[], None),
     ("ui.symmetryTransform", "Transform Symmetry", &[], None),
     // Right-click the options bar's tool icon (#2825); `tool.resetAll` asks first.

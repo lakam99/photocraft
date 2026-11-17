@@ -61,7 +61,10 @@ next to them.
 Builds made with `CRAFT_FONTS_DIR` (all official releases) embed fonts from
 [storytold/craft-fonts](https://github.com/storytold/craft-fonts) at a pinned commit; no font file
 from it is committed here. Per-file authors, sources and licences:
-[craft-fonts `ATTRIBUTION.md`](https://github.com/storytold/craft-fonts/blob/main/ATTRIBUTION.md).
+[craft-fonts `ATTRIBUTION.md`](https://github.com/storytold/craft-fonts/blob/cc9269cd8d8258785dac603fba3122e5d2556795/ATTRIBUTION.md).
+Fork release builds pin the complete default font manifest in [`craft-fonts.rev`](craft-fonts.rev),
+including CJK, Arabic, Hebrew, Indic and other script fallbacks. Every listed face is OFL-1.1;
+the package includes its full notice and the upstream per-file attribution under `licenses/craft-fonts/`.
 
 | Font (embedded at build time) | Use | License |
 |---|---|---|
@@ -78,7 +81,7 @@ The built-in ICC profiles and the generated LUT looks come from `craft-cms`
 
 | Path | Title | Author | Source | License |
 |---|---|---|---|---|
-| `docs/brand/` (all files) | ArtCraft name, wordmark and mark | ArtCraft Team | getartcraft.com | Not open source; trademarks of the ArtCraft Team, [`docs/brand/LICENSE-brand.txt`](docs/brand/LICENSE-brand.txt) |
+The upstream ArtCraft trademark artwork is omitted from this fork. Its [brand terms](docs/brand/LICENSE-brand.txt) are retained for reference.
 | `docs/images/photocraft-*.jpg` | PhotoCraft screenshots | PhotoCraft contributors (UI) | Rendered offscreen with the `snapshot` example | MIT OR Apache-2.0 (UI); the artwork in each is public domain, listed below |
 | `docs/images/embedded-vector-editor-en.png` | Embedded AI/PDF/EPS conversion warning and editor chooser (no artwork) | Don Omondi | Offscreen `smart_svg_ui::tests::capture_embedded_vector_conversion_prompt` with authored bytes and mock services | MIT OR Apache-2.0 |
 | `docs/images/embedded-vector-tabs-linux.png` | Shared VectorCraft window after a portal editor save and ordinary document launch | Don Omondi | Local Linux GUI acceptance with authored orange rectangle/blue circle SVGs; no private artwork | MIT OR Apache-2.0 |
