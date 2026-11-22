@@ -1228,6 +1228,10 @@ mod tests {
         // Immediately remove the file from disk
         std::fs::remove_file(&file_path).unwrap();
 
+        // Deleting the fixture can outlast the 10 ms test window on a busy disk.
+        // Start the cache window after that I/O so this tests the unexpired-cache path.
+        app.thumbnail_cache.lock().unwrap().entries.get_mut(&path_str).unwrap().last_checked = std::time::Instant::now();
+
         // Calling get_or_load_thumbnail immediately within the recheck window serves from
         // memory without touching disk or erroring out
         let tex2 = get_or_load_thumbnail(&app, &ctx, &path_str);

@@ -13,6 +13,8 @@
 //! `--wayland-notice` previews the native file drag-and-drop guidance shown in Wayland sessions.
 //! `--update-notice` previews a newer release without contacting the network.
 //! `--custom-titlebar` draws the Windows/Linux title bar (caption buttons in the top bar).
+//! `--ai-profile path` exercises the native chat component with an isolated profile;
+//! secure key loading and chat-history persistence are disabled for that capture.
 //!
 //! `--monitor 1366x768 --window-top 31` simulates the display the window is on (in points) and
 //! where its content starts on it, e.g. a window running under a Windows taskbar.
@@ -64,6 +66,8 @@ fn main() {
             photocraft_io::export(doc, path, &opts).map(|r| (r.bytes, r.warnings)).map_err(|e| e.to_string())
         })),
         write: Some(Box::new(|path: &str, bytes: &[u8]| photocraft_format::atomic_write(std::path::Path::new(path), bytes).map_err(|e| e.to_string()))),
+        #[cfg(not(target_arch = "wasm32"))]
+        ai_preferences_file: arg(&args, "--ai-profile").map(std::path::PathBuf::from),
         ..Default::default()
     };
     let open = arg(&args, "--open");
@@ -87,6 +91,14 @@ fn main() {
             services.is_wayland = wayland_notice;
             services.xwayland_command = wayland_notice.then(|| "WAYLAND_DISPLAY= photocraft".into());
             let mut app = PhotocraftApp::new(photocraft_engine::Session::new(), services);
+            #[cfg(not(target_arch = "wasm32"))]
+            if app.services.ai_preferences_file.is_some() {
+                // Offscreen UI checks must never load a user's stored key or overwrite a chat archive.
+                app.session.edit_prefs(|p| {
+                    p.ai.remember_key = false;
+                    p.ai.remember_history = false;
+                });
+            }
             if update_notice {
                 app.session.updates.status = photocraft_engine::updates_cmds::Status::Available {
                     release: photocraft_engine::updates_cmds::Release {
