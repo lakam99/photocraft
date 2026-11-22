@@ -2,7 +2,11 @@ PhotoCraft portable mode
 
 While this file sits next to photocraft.exe, PhotoCraft keeps its preferences, brush presets,
 crash-recovery autosaves and startup state in the PhotoCraftData folder beside it, and writes
-nothing to %APPDATA% or %LOCALAPPDATA%. Copy the whole folder to move PhotoCraft with its settings.
+no editor preferences to %APPDATA% or %LOCALAPPDATA%. Copy the whole folder to move PhotoCraft with its settings.
+
+Shared AI Chat component updates use the per-user ArkCraft component cache in %LOCALAPPDATA%.
+Saved API keys stay in the OS credential store. These shared components and secure keys are separate
+from the portable editor data folder.
 
 Delete this file to use the normal per-user folders instead: %APPDATA%\Photocraft for settings
 and %LOCALAPPDATA%\Photocraft\Recovery for crash-recovery autosaves. If PhotoCraftData can't be

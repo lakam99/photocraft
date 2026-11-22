@@ -1,7 +1,8 @@
 //! PhotoCraft adapter for the shared native Craft AI Chat panel.
 mod tools;
 use crate::PhotocraftApp;
-use craft_ai_chat_egui::{CredentialProfile, Host, HostInfo, Panel, Preferences, ToolCall};
+use craft_ai_chat_egui::client::Panel;
+use craft_ai_chat_egui::{CredentialProfile, Host, HostInfo, Preferences, ToolCall};
 use serde_json::{Value, json};
 use std::sync::Arc;
 
